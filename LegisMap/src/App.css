@@ -9,3 +9,6 @@
     align-items: center;
 }
 
+.scrollable-column {
+    overflow-y: auto;
+  }

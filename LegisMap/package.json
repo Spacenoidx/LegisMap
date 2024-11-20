@@ -1,5 +1,5 @@
 {
-  "name": "moodring",
+  "name": "LegisMap",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,6 +14,7 @@
     "@babel/runtime-corejs2": "^7.26.0",
     "@babel/runtime-corejs3": "^7.26.0",
     "bootstrap": "^5.3.3",
+    "LegisMap": "file:",
     "moodring": "file:",
     "rc-slider": "^11.1.7",
     "react": "^18.3.1",

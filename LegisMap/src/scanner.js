@@ -7,15 +7,29 @@ async function getSearch(statecode) {
 			query: "marijuana",
 		};
 
+		const billsArray = [];
+
 		const queryString = new URLSearchParams(params).toString();
 		const url = `https://api.legiscan.com/?${queryString}`;
 
 		try {
 			const response = await fetch(url);
 			const data = await response.json();
-			// console.log(data);
+			console.log("INSIDE FUNCTION");
+			// console.log(data.searchresult);
+			const searchresult = data.searchresult;
 
-			return data;
+			for (const key in searchresult) {
+				if (key !== "summary") {
+					const bill = searchresult[key];
+					// console.log(`Bill number: ${bill.bill_number}`);
+					// console.log(`Title: ${bill.title}`);
+					// console.log("--- \n \n");
+					billsArray.push(bill);
+				}
+			}
+			console.log(billsArray);
+			return billsArray;
 		} catch (error) {
 			console.error("Error:", error);
 			return null;
@@ -23,22 +37,22 @@ async function getSearch(statecode) {
 	}
 }
 
-const results = await getSearch("ND");
+// const results = await getSearch("ND");
 // console.log("TESTING TESTING TESTING");
 // console.log(results.searchresult);
-const searchresult = results.searchresult;
+// const searchresult = results.searchresult;
 
-const billsArray = [];
+// const billsArray = [];
 
-for (const key in searchresult) {
-    if (key !== 'summary') {
-        const bill = searchresult[key];
-        console.log(`Bill number: ${bill.bill_number}`);
-        console.log(`Title: ${bill.title}`);
-        console.log('--- \n \n');
-		billsArray.push(bill);
+// for (const key in searchresult) {
+//     if (key !== 'summary') {
+//         const bill = searchresult[key];
+//         console.log(`Bill number: ${bill.bill_number}`);
+//         console.log(`Title: ${bill.title}`);
+//         console.log('--- \n \n');
+// 		billsArray.push(bill);
 
-		
-    }
-}
+//     }
+// }
+// console.log(billsArray);
 export default getSearch;

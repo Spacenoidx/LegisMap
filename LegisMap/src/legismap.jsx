@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Container, Col, Form, Button } from "react-bootstrap";
+import { Row, Container, Col, Form, Button, ListGroup } from "react-bootstrap";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
@@ -10,9 +10,29 @@ import getSearch from "./scanner";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
+const BillList = ({ ListItem, displayedState }) => {
+	return (
+		<div>
+			<ListGroup>
+				<ListGroup.Item>Bills from {displayedState}</ListGroup.Item>
+				{ListItem.map((bill, index) => (
+					<ListGroup.Item key={index}>{bill.title}</ListGroup.Item>
+				))}
+			</ListGroup>
+		</div>
+	);
+};
+
 function Legismap() {
 	const [selectedState, setSelectedState] = useState(null);
 	const [selectedStateCode, setSelectedStateCode] = useState(null);
+	const [bills, setBills] = useState([]);
+	const [displayedState, setDisplayedState] = useState(null);
+
+	const handleStateChange = (event) => {
+		setSelectedState(event.target.value);
+		setSelectedStateCode(event.target.value);
+	};
 
 	const searchData = getSearch(selectedStateCode);
 
@@ -74,16 +94,15 @@ function Legismap() {
 			fluid
 			className=""
 			style={{
-				minHeight: "100vh",
 				minWidth: "100vw",
 				backgroundColor: "lightblue",
 				border: "10px solid black",
 			}}
 		>
-			<Row className="justify-content-center align-items-center mb-5">
+			<Row className="justify-content-center align-items-center mb-5 flex-grow-0">
 				<Col xs={12} md={8} lg={6}>
 					<h1 className="text-center">
-						{selectedState} Legislative Data
+						Legislation Search Term Heat Map
 					</h1>
 				</Col>
 			</Row>
@@ -91,10 +110,11 @@ function Legismap() {
 				<Col
 					xs={12}
 					md={8}
-					lg={2}
+					lg={4}
 					className="d-flex align-items-center justify-content-center"
 				>
 					<Form.Select
+						value={selectedStateCode}
 						onChange={(e) => {
 							setSelectedState(
 								e.target.options[e.target.selectedIndex].text
@@ -111,19 +131,36 @@ function Legismap() {
 				</Col>
 
 				<Col
-					lg={3}
+					xs={12}
+					md={8}
+					lg={6}
+					className="d-flex align-items-center justify-content-center"
+				>
+					<Form.Control type="text" placeholder="Search a term" />
+				</Col>
+
+				<Col
+					lg={2}
 					className="d-flex align-items-center justify-content-center"
 				>
 					{" "}
-					<Button onClick={() => getSearch(selectedStateCode)}>
+					<Button
+						onClick={async () => {
+							const bills = await getSearch(selectedStateCode);
+							setBills(bills);
+							console.log("Here are the bills:");
+							bills.forEach((bill) => console.log(bill));
+							setDisplayedState(selectedState); // Set displayedState(selectedState);
+						}}
+					>
 						Get Data
 					</Button>
 				</Col>
 			</Row>
-			<Row className="justify-content-center">
-				<Col xs={12} md={8} lg={6}>
+			<Row className="justify-content-center mb-5">
+				<Col xs={12} md={6} lg={6}>
 					<div className="map-container">
-						<svg viewBox="0 0 960 600" width="100%" height="100%">
+						<svg viewBox="0 0 960 600" width="100%">
 							<g>
 								<path
 									d="M0,0 L0,600 L960,600 L960,0 Z"
@@ -157,6 +194,13 @@ function Legismap() {
 														setSelectedState(
 															stateName
 														);
+														setSelectedStateCode(
+															states.filter(
+																(state) =>
+																	state.name ===
+																	stateName
+															)[0].code
+														);
 													}}
 													// onMouseLeave={() => {
 													// 	setSelectedState(null);
@@ -168,6 +212,22 @@ function Legismap() {
 								</Geographies>
 							</ComposableMap>
 						</svg>
+					</div>
+				</Col>
+				<Col
+					xs={12}
+					md={8}
+					lg={4}
+					className="scrollable-column d-flex flex-column"
+				>
+					<h3>Bill List from {displayedState}</h3>
+					<div style={{ height: "600px", overflowY: "auto" }}>
+						{bills && bills.length > 0 && (
+							<BillList
+								displayedState={displayedState}
+								ListItem={bills}
+							/>
+						)}
 					</div>
 				</Col>
 			</Row>
