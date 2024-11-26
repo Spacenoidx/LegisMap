@@ -37,8 +37,7 @@ async function getSearch(statecode) {
 	}
 }
 
-// const results = await getSearch("ND");
-// console.log("TESTING TESTING TESTING");
+// // console.log("TESTING TESTING TESTING");
 // console.log(results.searchresult);
 // const searchresult = results.searchresult;
 

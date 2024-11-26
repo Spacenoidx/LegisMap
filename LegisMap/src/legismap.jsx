@@ -14,7 +14,6 @@ const BillList = ({ ListItem, displayedState }) => {
 	return (
 		<div>
 			<ListGroup>
-				<ListGroup.Item>Bills from {displayedState}</ListGroup.Item>
 				{ListItem.map((bill, index) => (
 					<ListGroup.Item key={index}>{bill.title}</ListGroup.Item>
 				))}
@@ -95,7 +94,7 @@ function Legismap() {
 			className=""
 			style={{
 				minWidth: "100vw",
-				backgroundColor: "lightblue",
+				backgroundColor: "hsl(0, 100%, 64%)",
 				border: "10px solid black",
 			}}
 		>
