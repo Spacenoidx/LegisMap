@@ -33,7 +33,15 @@ function Legismap() {
 		setSelectedStateCode(event.target.value);
 	};
 
-	const searchData = getSearch(selectedStateCode);
+	const [searchTerm, setSearchTerm] = useState("");
+	
+	const handleSearch = async () => {
+		const bills = await getSearch(selectedStateCode);
+		setBills(bills);
+		setDisplayedState(selectedState);
+	};
+
+	const searchData = getSearch(selectedStateCode, searchTerm);
 
 	const states = [
 		{ name: "Alabama", code: "AL" },
@@ -135,7 +143,8 @@ function Legismap() {
 					lg={6}
 					className="d-flex align-items-center justify-content-center"
 				>
-					<Form.Control type="text" placeholder="Search a term" />
+					<Form.Control type="text" placeholder="Search a term" value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)} />
 				</Col>
 
 				<Col
@@ -145,7 +154,7 @@ function Legismap() {
 					{" "}
 					<Button
 						onClick={async () => {
-							const bills = await getSearch(selectedStateCode);
+							const bills = await getSearch(selectedStateCode, searchTerm);
 							setBills(bills);
 							console.log("Here are the bills:");
 							bills.forEach((bill) => console.log(bill));

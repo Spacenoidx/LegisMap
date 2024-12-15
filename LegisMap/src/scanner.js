@@ -1,10 +1,10 @@
-async function getSearch(statecode) {
+async function getSearch(statecode, queryTerm) {
 	if (statecode !== null && statecode !== "null") {
 		const params = {
 			state: statecode,
 			key: "832888b2712ec76b67d7385597cad774",
 			op: "getSearch",
-			query: "marijuana",
+			query: queryTerm,
 		};
 
 		const billsArray = [];
