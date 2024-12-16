@@ -10,7 +10,7 @@ import getSearch from "./scanner";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
-const BillList = ({ ListItem, displayedState }) => {
+const BillList = ({ ListItem, displayedState, searchTerm }) => {
 	return (
 		<div>
 			<ListGroup>
@@ -27,13 +27,13 @@ function Legismap() {
 	const [selectedStateCode, setSelectedStateCode] = useState(null);
 	const [bills, setBills] = useState([]);
 	const [displayedState, setDisplayedState] = useState(null);
+	const [searchTerm, setSearchTerm] = useState("");
 
 	const handleStateChange = (event) => {
 		setSelectedState(event.target.value);
 		setSelectedStateCode(event.target.value);
 	};
 
-	const [searchTerm, setSearchTerm] = useState("");
 	
 	const handleSearch = async () => {
 		const bills = await getSearch(selectedStateCode);
