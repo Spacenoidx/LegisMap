@@ -34,7 +34,6 @@ function Legismap() {
 		setSelectedStateCode(event.target.value);
 	};
 
-	
 	const handleSearch = async () => {
 		const bills = await getSearch(selectedStateCode);
 		setBills(bills);
@@ -143,8 +142,12 @@ function Legismap() {
 					lg={6}
 					className="d-flex align-items-center justify-content-center"
 				>
-					<Form.Control type="text" placeholder="Search a term" value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)} />
+					<Form.Control
+						type="text"
+						placeholder="Search a term"
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)}
+					/>
 				</Col>
 
 				<Col
@@ -154,7 +157,10 @@ function Legismap() {
 					{" "}
 					<Button
 						onClick={async () => {
-							const bills = await getSearch(selectedStateCode, searchTerm);
+							const bills = await getSearch(
+								selectedStateCode,
+								searchTerm
+							);
 							setBills(bills);
 							console.log("Here are the bills:");
 							bills.forEach((bill) => console.log(bill));
@@ -229,8 +235,11 @@ function Legismap() {
 					className="scrollable-column d-flex flex-column"
 				>
 					<h3>Bill List from {displayedState}</h3>
+					<h2>Search Term: {searchTerm ? searchTerm : "None"} </h2>
 					<div style={{ height: "600px", overflowY: "auto" }}>
-						{bills && bills.length > 0 && (
+						{bills.length === 0 ? (
+							<div>No Bills Found!</div>
+						) : (
 							<BillList
 								displayedState={displayedState}
 								ListItem={bills}
