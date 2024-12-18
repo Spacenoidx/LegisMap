@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Container, Col, Form, Button, ListGroup } from "react-bootstrap";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
@@ -10,7 +10,7 @@ import getSearch from "./scanner";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
-const BillList = ({ ListItem, displayedState, searchTerm }) => {
+const BillList = ({ ListItem, displayedState, searchTerm, displayedSearch }) => {
 	return (
 		<div>
 			<ListGroup>
@@ -28,6 +28,7 @@ function Legismap() {
 	const [bills, setBills] = useState([]);
 	const [displayedState, setDisplayedState] = useState(null);
 	const [searchTerm, setSearchTerm] = useState("");
+	const [displayedSearch, setDisplayedSearch] = useState(null);
 
 	const handleStateChange = (event) => {
 		setSelectedState(event.target.value);
@@ -41,6 +42,10 @@ function Legismap() {
 	};
 
 	const searchData = getSearch(selectedStateCode, searchTerm);
+
+	// useEffect(() => {
+	// 	setDisplayedSearch(searchData);
+	//   }, [searchTerm])
 
 	const states = [
 		{ name: "Alabama", code: "AL" },
@@ -101,14 +106,14 @@ function Legismap() {
 			className=""
 			style={{
 				minWidth: "100vw",
-				backgroundColor: "hsl(0, 100%, 64%)",
+				backgroundColor: "hsl(154, 43%, 60%)",
 				border: "10px solid black",
 			}}
 		>
 			<Row className="justify-content-center align-items-center mb-5 flex-grow-0">
 				<Col xs={12} md={8} lg={6}>
 					<h1 className="text-center">
-						Legislation Search Term Heat Map
+						Legislation Search by State
 					</h1>
 				</Col>
 			</Row>
@@ -164,7 +169,8 @@ function Legismap() {
 							setBills(bills);
 							console.log("Here are the bills:");
 							bills.forEach((bill) => console.log(bill));
-							setDisplayedState(selectedState); // Set displayedState(selectedState);
+							setDisplayedState(selectedState);
+							setDisplayedSearch(searchTerm) // Set displayedState(selectedState);
 						}}
 					>
 						Get Data
@@ -173,7 +179,8 @@ function Legismap() {
 			</Row>
 			<Row className="justify-content-center mb-5">
 				<Col xs={12} md={6} lg={6}>
-					<div className="map-container">
+					<div className="map-container"
+					style={{border: "10px solid black"}}>
 						<svg viewBox="0 0 960 600" width="100%">
 							<g>
 								<path
@@ -235,7 +242,7 @@ function Legismap() {
 					className="scrollable-column d-flex flex-column"
 				>
 					<h3>Bill List from {displayedState}</h3>
-					<h2>Search Term: {searchTerm ? searchTerm : "None"} </h2>
+					<h2>Search Term: {displayedSearch ? displayedSearch : "None"} </h2>
 					<div style={{ height: "600px", overflowY: "auto" }}>
 						{bills.length === 0 ? (
 							<div>No Bills Found!</div>
