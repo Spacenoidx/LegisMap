@@ -110,7 +110,7 @@ function Legismap() {
 				border: "10px solid black",
 			}}
 		>
-			<Row className="justify-content-center align-items-center mb-5 flex-grow-0">
+			<Row className="justify-content-center  mb-5 flex-grow-0">
 				<Col xs={12} md={8} lg={6}>
 					<h1 className="text-center">
 						Legislation Search by State
@@ -177,9 +177,9 @@ function Legismap() {
 					</Button>
 				</Col>
 			</Row>
-			<Row className="justify-content-center mb-5">
-				<Col xs={12} md={6} lg={6}>
-					<div className="map-container"
+			<Row className="mb-5">
+				<Col xs={12} md={6} lg={6} className="">
+					<div className="map-container align-items-left"
 					style={{border: "10px solid black"}}>
 						<svg viewBox="0 0 960 600" width="100%">
 							<g>
@@ -234,16 +234,18 @@ function Legismap() {
 							</ComposableMap>
 						</svg>
 					</div>
+
 				</Col>
 				<Col
 					xs={12}
 					md={8}
-					lg={4}
-					className="scrollable-column d-flex flex-column"
+					lg={6}
+					className="scrollable-column d-flex flex-column align-items-right"
 				>
 					<h3>Bill List from {displayedState}</h3>
 					<h2>Search Term: {displayedSearch ? displayedSearch : "None"} </h2>
-					<div style={{ height: "600px", overflowY: "auto" }}>
+					<div style={{ height: "600px", overflowY: "auto" }}
+					className="">
 						{bills.length === 0 ? (
 							<div>No Bills Found!</div>
 						) : (
