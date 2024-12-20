@@ -35,6 +35,13 @@ function Legismap() {
 		setSelectedStateCode(event.target.value);
 	};
 
+	const handleOnClick = (stateName) => {
+		setSelectedState(stateName);
+		setSelectedStateCode(
+			states.filter((state) => state.name === stateName)[0].code
+		);
+	};
+
 	const handleSearch = async () => {
 		const bills = await getSearch(selectedStateCode);
 		setBills(bills);
@@ -204,6 +211,7 @@ function Legismap() {
 													style={{
 														default: {
 															outline: "none",
+															
 														},
 														hover: {
 															fill: "red",
@@ -211,18 +219,7 @@ function Legismap() {
 															cursor: "pointer",
 														},
 													}}
-													onClick={() => {
-														setSelectedState(
-															stateName
-														);
-														setSelectedStateCode(
-															states.filter(
-																(state) =>
-																	state.name ===
-																	stateName
-															)[0].code
-														);
-													}}
+													onClick={() => handleOnClick(stateName)}
 													// onMouseLeave={() => {
 													// 	setSelectedState(null);
 													// }}
