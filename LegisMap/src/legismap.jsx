@@ -211,7 +211,7 @@ function Legismap() {
 															cursor: "pointer",
 														},
 													}}
-													onMouseEnter={() => {
+													onClick={() => {
 														setSelectedState(
 															stateName
 														);
