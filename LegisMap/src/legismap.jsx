@@ -211,6 +211,7 @@ function Legismap() {
 													style={{
 														default: {
 															outline: "none",
+															fill: stateName === selectedState ? "red" : "black"
 															
 														},
 														hover: {
