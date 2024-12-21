@@ -10,12 +10,21 @@ import getSearch from "./scanner";
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
-const BillList = ({ ListItem, displayedState, searchTerm, displayedSearch }) => {
+const BillList = ({
+	ListItem,
+	displayedState,
+	searchTerm,
+	displayedSearch,
+}) => {
 	return (
 		<div>
 			<ListGroup>
 				{ListItem.map((bill, index) => (
-					<ListGroup.Item key={index}>{bill.title}</ListGroup.Item>
+					<ListGroup.Item key={index}>
+						<p>Bill Number {bill.bill_id}: {bill.title}{" "}</p>
+						<a href={bill.url}> Bill URL</a>{" "}
+						<a href={bill.text_url}> Full Text</a>{" "}
+					</ListGroup.Item>
 				))}
 			</ListGroup>
 		</div>
@@ -119,9 +128,7 @@ function Legismap() {
 		>
 			<Row className="justify-content-center  mb-5 flex-grow-0">
 				<Col xs={12} md={8} lg={6}>
-					<h1 className="text-center">
-						Legislation Search by State
-					</h1>
+					<h1 className="text-center">Legislation Search by State</h1>
 				</Col>
 			</Row>
 			<Row className="justify-content-center align-items-center mb-5">
@@ -177,17 +184,19 @@ function Legismap() {
 							console.log("Here are the bills:");
 							bills.forEach((bill) => console.log(bill));
 							setDisplayedState(selectedState);
-							setDisplayedSearch(searchTerm) // Set displayedState(selectedState);
+							setDisplayedSearch(searchTerm); // Set displayedState(selectedState);
 						}}
 					>
 						Get Data
 					</Button>
 				</Col>
 			</Row>
-			<Row className="mb-5">
+			<Row className="mb-5 align-items-end">
 				<Col xs={12} md={6} lg={6} className="">
-					<div className="map-container align-items-left"
-					style={{border: "10px solid black"}}>
+					<div
+						className="map-container align-items-left align-items-bottom"
+						style={{ border: "10px solid black" }}
+					>
 						<svg viewBox="0 0 960 600" width="100%">
 							<g>
 								<path
@@ -207,20 +216,29 @@ function Legismap() {
 													key={geo.rsmKey}
 													geography={geo}
 													stroke="#FFF"
-													strokeWidth={0.5}
+													strokeWidth={0.6}
 													style={{
 														default: {
 															outline: "none",
-															fill: stateName === selectedState ? "red" : "black"
-															
+															fill:
+																stateName ===
+																selectedState
+																	? "red"
+																	: "black",
 														},
 														hover: {
-															fill: "red",
+															fill:
+																stateName ===
+																selectedState
+																	? "red"
+																	: "green",
 															outline: "none",
 															cursor: "pointer",
 														},
 													}}
-													onClick={() => handleOnClick(stateName)}
+													onClick={() =>
+														handleOnClick(stateName)
+													}
 													// onMouseLeave={() => {
 													// 	setSelectedState(null);
 													// }}
@@ -232,7 +250,6 @@ function Legismap() {
 							</ComposableMap>
 						</svg>
 					</div>
-
 				</Col>
 				<Col
 					xs={12}
@@ -241,9 +258,14 @@ function Legismap() {
 					className="scrollable-column d-flex flex-column align-items-right"
 				>
 					<h3>Bill List from {displayedState}</h3>
-					<h2>Search Term: {displayedSearch ? displayedSearch : "None"} </h2>
-					<div style={{ height: "600px", overflowY: "auto" }}
-					className="">
+					<h2>
+						Search Term:{" "}
+						{displayedSearch ? displayedSearch : "None"}{" "}
+					</h2>
+					<div
+						style={{ height: "600px", overflowY: "auto" }}
+						className=""
+					>
 						{bills.length === 0 ? (
 							<div>No Bills Found!</div>
 						) : (
