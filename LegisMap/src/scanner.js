@@ -37,6 +37,9 @@ async function getSearch(statecode, queryTerm) {
 	}
 }
 
+// getSearch("", "health");
+
+
 // // console.log("TESTING TESTING TESTING");
 // console.log(results.searchresult);
 // const searchresult = results.searchresult;
