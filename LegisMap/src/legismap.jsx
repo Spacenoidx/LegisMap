@@ -197,7 +197,7 @@ function Legismap() {
 						className="map-container align-items-left align-items-bottom"
 						style={{ border: "10px solid black" }}
 					>
-						<svg viewBox="0 0 960 600" width="100%">
+						<svg viewBox="0 0 960 600" width="100%" height="100%">
 							<g>
 								<path
 									d="M0,0 L0,600 L960,600 L960,0 Z"
