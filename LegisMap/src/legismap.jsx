@@ -122,6 +122,7 @@ function Legismap() {
 			className=""
 			style={{
 				minWidth: "100vw",
+				minHeight: "100vh",
 				backgroundColor: "hsl(154, 43%, 60%)",
 				border: "10px solid black",
 			}}
@@ -134,7 +135,7 @@ function Legismap() {
 			<Row className="justify-content-center align-items-center mb-5">
 				<Col
 					xs={12}
-					md={8}
+					md={12}
 					lg={4}
 					className="d-flex align-items-center justify-content-center"
 				>
@@ -192,15 +193,15 @@ function Legismap() {
 				</Col>
 			</Row>
 			<Row className="mb-5 align-items-end">
-				<Col xs={12} md={6} lg={6} className="">
-					<div
+				<Col xs={12} md={9} lg={9} xl={6} className="">
+					<div height="100%" width="100%"
 						className="map-container align-items-left align-items-bottom"
 						style={{ border: "10px solid black" }}
 					>
-						<svg viewBox="0 0 960 600" width="100%" height="100%">
+						<svg viewBox="0 0 100 100" width="100%" height="80%">
 							<g>
 								<path
-									d="M0,0 L0,600 L960,600 L960,0 Z"
+									d="M0,0 L0,600 L900,600 L960,0 Z"
 									fill="lightblue"
 								/>
 							</g>
@@ -253,8 +254,10 @@ function Legismap() {
 				</Col>
 				<Col
 					xs={12}
-					md={8}
-					lg={6}
+					md={3}
+					lg={3}
+					xl={6}
+					sm={12}
 					className="scrollable-column d-flex flex-column align-items-right"
 				>
 					<h3>Bill List from {displayedState}</h3>

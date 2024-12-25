@@ -13,4 +13,10 @@
     overflow-y: auto;
   }
 
-  
+  ListGroup{
+    background-color: aqua;
+  }
+
+    /* .list-group-item {
+        background-color: aqua;
+    } */
